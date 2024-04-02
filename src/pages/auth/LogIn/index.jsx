@@ -1,10 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../App';
+import manageCookie, { setCookie } from '../../utils/manageCookie'
+
 
 const Login = () => {
   const { isLogin, setIsLogin } = useContext(AuthContext);
   const [email, setEmail] = useState('');
+
   const [password, setPassword] = useState('');
 
   const login = async (event) => {
@@ -21,6 +24,9 @@ const Login = () => {
         },
       });
       const data = await res.json();
+    
+      setCookie("accessToken",data.access_token)
+      setCookie("refreshToken",data.refresh_token)
       console.log(data);
     } catch (error) {
       console.log(error);
