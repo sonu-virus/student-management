@@ -1,9 +1,10 @@
-import React,{useState,} from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 function ResetPassword() {
-const [password,setPassword] = useState("")
-const params = useParams()
+  const navigate = useNavigate();
+  const [password, setPassword] = useState('');
+  const params = useParams();
 
   const resetPassword = async (event) => {
     event.preventDefault();
@@ -11,21 +12,22 @@ const params = useParams()
       const res = await fetch(
         `https://api.iot.inflection.org.in/users/reset_password/${params.token}`,
         {
-          method: "PATCH",
+          method: 'PATCH',
           body: JSON.stringify({
-            password:password
+            password: password,
           }),
           headers: {
-            "Content-type": "application/json; charset=UTF-8",
+            'Content-type': 'application/json; charset=UTF-8',
           },
         }
       );
       const data = await res.json();
       console.log(data);
+      navigate('/auth/login');
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <div className="flex items-center justify-center h-screen ">
