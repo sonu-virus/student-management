@@ -24,7 +24,7 @@ const Login = () => {
         },
       });
       const data = await res.json();
-    
+    console.log(data);
       setCookie("accessToken",data.access_token)
       setCookie("refreshToken",data.refresh_token)
       console.log(data);
@@ -34,27 +34,30 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <form className="px-20 py-32 bg-gray-400" onSubmit={login}>
+    <div className="flex items-center bg-violet-400 justify-center h-screen">
+      <form className="px-20 py-24 bg-pink-500" onSubmit={login}>
+        <h1 className='text-2xl text-white pb-2'>
+          LOGIN PAGE
+        </h1>
         <div className="grid grid-row gap-4">
-          <label>Email</label>
-          <input
+          <label className='text-2xl'>Email</label>
+          <input className='p-2 bg-white-800'
             type="email"
             placeholder="Enter Your Email"
             onChange={(e) => setEmail(e.target.value)}
           />
-          <label>password</label>
-          <input
+          <label className='text-2xl'>password</label>
+          <input className='p-2 bg-white-800'
             type="password"
             placeholder="Enter Your password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Link to={'/auth/forgot_password'}>Forgot Password</Link>
-          <button type="submit">Login</button>
+          <button className="bg-blue-600 p-2" type="submit">Login</button>
+          <Link className="bg-blue-600 p-2 flex justify-center" to={'/auth/forgot_password'}>Forgot Password</Link>
         </div>
       </form>
     </div>
   );
-};
+  };
 
 export default Login;

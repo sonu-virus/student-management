@@ -35,7 +35,7 @@ const App = () => {
     const tokenChecker = () => {
       const accessToken = getCookie("accessToken");
       const refreshToken = getCookie("refreshToken");
-      console.log("running");
+
       if (accessToken || accessToken !== null) {
         return;
       }
@@ -51,12 +51,12 @@ const App = () => {
     <AuthContext.Provider value={{ isLogin, setIsLogin }}>
       <Routes>
         <Route path="/" element={<HomePage />} />
-
         <Route path="/auth/sign_up" element={<SignUpPage />} />
         <Route path="/auth/reset_password/:token" element={<ResetPassword />} />
         <Route path="/auth/forgot_password" element={<ForgotPasswordPage />} />
         <Route path="/auth/login" element={<Login />} />
         <Route path="/students" element={<StudentsListPage />} />
+        <Route path="*" element={<div>Page Not Found</div>} />
       </Routes>
     </AuthContext.Provider>
   );

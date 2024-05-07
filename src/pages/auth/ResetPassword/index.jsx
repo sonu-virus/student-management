@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import {  useNavigate, useParams } from 'react-router-dom';
 
 function ResetPassword() {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ function ResetPassword() {
       );
       const data = await res.json();
       console.log(data);
-      navigate('/auth/login');
+      navigate('/auth/login',{replace:true});
     } catch (error) {
       console.log(error);
     }

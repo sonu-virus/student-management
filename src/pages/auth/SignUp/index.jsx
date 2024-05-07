@@ -36,7 +36,8 @@ const SignUpPage = () => {
   return (
     <div className="container">
       <div className="flex bg-gray-600 h-screen justify-center p-4">
-        <form className=" border-2   p-28 bg-purple-600" onSubmit={signup}>
+        <form className=" border-2   p-20 bg-purple-600" onSubmit={signup}>
+          <div className="text-2xl text-white pb-12">SIGNUP PAGE</div>
           <div className="grid grid-row gap-4">
             <label className="text-2xl ">Email</label>
             <div className=" border-2  border-blue-400 "> 
@@ -64,6 +65,9 @@ const SignUpPage = () => {
             <button className=" rounded-md p-2 mt-8 border-2 border-blue-400" type="submit">Create Account</button>
           </div>
         </form>
+      </div>
+      <div>
+
       </div>
     </div>
   );
