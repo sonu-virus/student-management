@@ -4,6 +4,10 @@ import { AuthContext } from '../../../App';
 import manageCookie, { setCookie } from '../../utils/manageCookie'
 
 
+import { seeToast } from "../../utils/toast";
+
+
+
 const Login = () => {
   const { isLogin, setIsLogin } = useContext(AuthContext);
   const [email, setEmail] = useState('');
@@ -28,14 +32,15 @@ const Login = () => {
       setCookie("accessToken",data.access_token)
       setCookie("refreshToken",data.refresh_token)
       console.log(data);
+      seeToast("Login successful !")
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div className="flex items-center bg-violet-400 justify-center h-screen">
-      <form className="px-20 py-24 bg-pink-500" onSubmit={login}>
+    <div className="flex items-center bg-gray-600 justify-center h-screen">
+      <form className="border-2  border-blue-400 px-20 py-24 bg-purple-600" onSubmit={login}>
         <h1 className='text-2xl text-white pb-2'>
           LOGIN PAGE
         </h1>
@@ -47,13 +52,13 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
           <label className='text-2xl'>password</label>
-          <input className='p-2 bg-white-800'
+          <input className='p-2 '
             type="password"
             placeholder="Enter Your password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="bg-blue-600 p-2" type="submit">Login</button>
-          <Link className="bg-blue-600 p-2 flex justify-center" to={'/auth/forgot_password'}>Forgot Password</Link>
+          <button className="border-2  border-blue-400 p-2" type="submit">Login</button>
+          <Link className="border-2  border-blue-400 p-2 flex justify-center" to={'/auth/forgot_password'}>Forgot Password</Link>
         </div>
       </form>
     </div>

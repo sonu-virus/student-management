@@ -7,6 +7,8 @@ import ForgotPasswordPage from "./pages/auth/ForgotPassword";
 import StudentsListPage from "./pages/students";
 import { createContext, useEffect, useState } from "react";
 import { getCookie, setCookie } from "./pages/utils/manageCookie";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const AuthContext = createContext();
 
@@ -49,6 +51,7 @@ const App = () => {
 
   return (
     <AuthContext.Provider value={{ isLogin, setIsLogin }}>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/auth/sign_up" element={<SignUpPage />} />
