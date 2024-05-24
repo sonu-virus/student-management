@@ -4,11 +4,12 @@ import HomePage from "./pages/HomePage";
 import ResetPassword from "./pages/auth/ResetPassword";
 import Login from "./pages/auth/LogIn";
 import ForgotPasswordPage from "./pages/auth/ForgotPassword";
-import StudentsListPage from "./pages/students";
+import StudentsListPage from "./pages/Students/GetAllStudents";
 import { createContext, useEffect, useState } from "react";
 import { getCookie, setCookie } from "./pages/utils/manageCookie";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AddStudent from "./pages/Students/AddStudent";
 
 export const AuthContext = createContext();
 
@@ -59,6 +60,7 @@ const App = () => {
         <Route path="/auth/forgot_password" element={<ForgotPasswordPage />} />
         <Route path="/auth/login" element={<Login />} />
         <Route path="/students" element={<StudentsListPage />} />
+        <Route path="/student" element={<AddStudent />} />
         <Route path="*" element={<div>Page Not Found</div>} />
       </Routes>
     </AuthContext.Provider>

@@ -14,7 +14,7 @@ function HomePage() {
     <div className='h-screen bg-blue-600'>
     <div className='flex justify-center pt-5 text-white'>
 
-     WELCOME HOME PAGE  SIGNUP OR LOGIN !
+     Welcome To Home Page  Signup Or Login !
 
     </div>
     </div>
