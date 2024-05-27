@@ -1,45 +1,43 @@
-import React from "react";
-import { useState } from "react";
-import { seeToast } from "../../utils/toast";
+import React from 'react';
+import { useState } from 'react';
+import { seeToast } from '../../utils/toast';
 // import axios from "axios";
 
 const SignUpPage = () => {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [showPData, setShowPData] = useState({});
 
   const signup = async (event) => {
     event.preventDefault();
     try {
       const res = await fetch(
-        "https://api.iot.inflection.org.in/users/signup",
+        'https://api.iot.inflection.org.in/users/signup',
         {
-          method: "POST",
+          method: 'POST',
           body: JSON.stringify({
             email: email,
             full_name: name,
-            gender: "male",
-            reset_password_ui_url: "http://localhost:3000/auth/reset_password",
+            gender: 'male',
+            reset_password_ui_url: 'http://localhost:3000/auth/reset_password',
           }),
           headers: {
-            "Content-type": "application/json; charset=UTF-8",
+            'Content-type': 'application/json; charset=UTF-8',
           },
         }
       );
       const data = await res.json();
       console.log(data.message);
       setShowPData(data);
-      seeToast(data.message)
-
-      } catch (err) {
+      seeToast(data.message);
+    } catch (err) {
       console.log(err);
     }
   };
 
   return (
     <div className="container">
-  
-      <div className="flex bg-gray-600 h-screen justify-center p-4">
+      <div className="flex bg-gray-600 h-screen justify-center p-4 ">
         <form
           className="border-2  border-blue-400   p-20 bg-purple-600"
           onSubmit={signup}

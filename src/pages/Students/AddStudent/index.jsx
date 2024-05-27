@@ -1,25 +1,24 @@
-import React, {  useState } from "react";
-import { getCookie } from "../../utils/manageCookie";
+import React, { useState } from 'react';
+import { getCookie } from '../../utils/manageCookie';
 const AddStudent = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [fName, setFName] = useState("");
-  const [aadhar, setAadhar] = useState("");
-  const [motherName, setMName] = useState("");
-  const [mobileNumber, setNumber] = useState("");
-  const [address, setAddress] = useState("");
-  const [category, setCatogory] = useState("");
-  const [gender, setGender] = useState("");
-  const [dob, setDOB] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [fName, setFName] = useState('');
+  const [aadhar, setAadhar] = useState('');
+  const [motherName, setMName] = useState('');
+  const [mobileNumber, setNumber] = useState('');
+  const [address, setAddress] = useState('');
+  const [category, setCatogory] = useState('');
+  const [gender, setGender] = useState('');
+  const [dob, setDOB] = useState('');
 
-  const [profilePic, setProfilePic] = useState(null)
-  const [prevImage,setPrevImage] = useState(null)
+  const [profilePic, setProfilePic] = useState(null);
+  const [prevImage, setPrevImage] = useState(null);
 
-
-  const accessToken = getCookie("accessToken");
+  const accessToken = getCookie('accessToken');
 
   const addStudents = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     console.log(name);
     console.log(email);
     console.log(fName);
@@ -32,60 +31,65 @@ const AddStudent = () => {
     console.log(dob);
     try {
       const res = await fetch(
-        "https://api.iot.inflection.org.in/sms/students",
+        'https://api.iot.inflection.org.in/sms/students',
 
         {
-          method: "POST",
-          body: JSON.stringify({
-            name: name,
-            email: email,
-            father_name: fName,
-            mother_name: motherName,
-            mobile_number: mobileNumber,
-            address: address,
-            aadhar: aadhar,
-            gender: gender,
-            category: category,
-            dob: dob,
-          }),
+          method: 'POST',
+          body: formData(),
+
           headers: {
             Authorization: `Bearer ${accessToken}`,
-            "Content-type": "application/json; charset=UTF-8",
           },
         }
       );
       console.log(res);
       const data = await res.json();
       console.log(data);
-      console.log("hello");
+      console.log('hello');
     } catch (err) {
       console.log(err);
     }
   };
 
-
   const handleImage = (e) => {
-    setProfilePic(e.target.files[0])
-    setPrevImage(URL.createObjectURL(e.target.files[0]))
+    setProfilePic(e.target.files[0]);
+    setPrevImage(URL.createObjectURL(e.target.files[0]));
   };
 
-
+  const formData = () => {
+    const formData = new FormData();
+    formData.append('image', profilePic);
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('father_name', fName);
+    formData.append('mother_name', motherName);
+    formData.append('mobile_number', mobileNumber);
+    formData.append('address', address);
+    formData.append('aadhar', aadhar);
+    formData.append('gender', gender);
+    formData.append('category', category);
+    formData.append('dob', dob);
+    return formData;
+  };
 
   return (
     <div className="flex items-center justify-center h-auto ">
-      <form onSubmit={addStudents} className="flex  bg-gray-300 w-2/4 justify-center  h-auto p-2 items-center ">
+      <form
+        onSubmit={addStudents}
+        className="flex  bg-gray-300 w-2/4 justify-center  h-auto p-2 items-center "
+      >
         <div>
           <div>
-            {
-            prevImage !== null && <img src={prevImage} width={100} height={200}/>
-            }
-             <input type="file" accept="image/**" onChange={handleImage} />
-             <button type="submit">uplaod</button>
+            {prevImage !== null && (
+              <img src={prevImage} width={100} height={200} />
+            )}
+            <input type="file" accept="image/**" onChange={handleImage} />
+            <button onClick={formData}>uplaod</button>
           </div>
           <div className="grid grid-cols-2 p-8 gap-16  ">
             <div className=" grid grid-rows-2  gap-y-2">
               <label className="text-blue-600 text-xl">Name</label>
-              <input 
+              <input
                 type="text"
                 required
                 placeholder="Enter Your Name"
@@ -171,7 +175,7 @@ const AddStudent = () => {
             </div>
           </div>
           <div className="flex justify-center items-center border-2 bg-blue-600">
-          <button  type="submit"> submit</button>
+            <button type="submit"> submit</button>
           </div>
         </div>
       </form>
@@ -180,13 +184,3 @@ const AddStudent = () => {
 };
 
 export default AddStudent;
-
-
-  
- 
- 
-
-
-
-    
-
