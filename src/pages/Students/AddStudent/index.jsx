@@ -19,26 +19,30 @@ const AddStudent = () => {
 
   const addStudents = async (e) => {
     e.preventDefault();
-    console.log(name);
-    console.log(email);
-    console.log(fName);
-    console.log(aadhar);
-    console.log(motherName);
-    console.log(mobileNumber);
-    console.log(address);
-    console.log(category);
-    console.log(gender);
-    console.log(dob);
+
     try {
       const res = await fetch(
         'https://api.iot.inflection.org.in/sms/students',
 
         {
           method: 'POST',
-          body: formData(),
-
+          body: JSON.stringify({
+            image: profilePic,
+            name: name,
+            email: email,
+            father_name: fName,
+            mother_name: motherName,
+            mobile_number: mobileNumber,
+            address: address,
+            aadhar: aadhar,
+            gender: gender,
+            category: category,
+            dob: dob,
+          }),
           headers: {
             Authorization: `Bearer ${accessToken}`,
+
+            'Content-type': 'application/json; charset=UTF-8',
           },
         }
       );
@@ -56,130 +60,235 @@ const AddStudent = () => {
     setPrevImage(URL.createObjectURL(e.target.files[0]));
   };
 
-  const formData = () => {
-    const formData = new FormData();
-    formData.append('image', profilePic);
-    formData.append('name', name);
-    formData.append('email', email);
-    formData.append('father_name', fName);
-    formData.append('mother_name', motherName);
-    formData.append('mobile_number', mobileNumber);
-    formData.append('address', address);
-    formData.append('aadhar', aadhar);
-    formData.append('gender', gender);
-    formData.append('category', category);
-    formData.append('dob', dob);
-    return formData;
-  };
-
   return (
-    <div className="flex items-center justify-center h-auto ">
-      <form
-        onSubmit={addStudents}
-        className="flex  bg-gray-300 w-2/4 justify-center  h-auto p-2 items-center "
-      >
+    <form onSubmit={addStudents} className="min-h-screen ">
+      <div>
         <div>
-          <div>
-            {prevImage !== null && (
-              <img src={prevImage} width={100} height={200} />
-            )}
-            <input type="file" accept="image/**" onChange={handleImage} />
-            <button onClick={formData}>uplaod</button>
-          </div>
-          <div className="grid grid-cols-2 p-8 gap-16  ">
-            <div className=" grid grid-rows-2  gap-y-2">
-              <label className="text-blue-600 text-xl">Name</label>
+          {prevImage !== null && (
+            <img src={prevImage} width={100} height={200} />
+          )}
+          <input type="file" accept="image/**" onChange={handleImage} />
+        </div>
+        <div className="grid grid-cols-2 pt-8  p-4 gap-8  ">
+          {/* -----------------0--------------- */}
+
+          <div className=" grid grid-rows-2  ">
+            <label
+              htmlFor="name"
+              className="relative block rounded-md border shadow shadow-md border-gray-200 shadow-sm focus-within:border-purple-600 focus-within:ring-1 focus-within:ring-purple-600"
+            >
               <input
                 type="text"
-                required
-                placeholder="Enter Your Name"
+                id="name"
+                className="px-3 py-1.5 peer border-none bg-transparent text-gray-800 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
+                placeholder="Name"
                 onChange={(e) => setName(e.target.value)}
               />
-            </div>
-            <div className=" grid grid-rows-2 gap-y-2">
-              <label className="text-blue-600 text-xl">Email</label>
+
+              <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white  p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                Name
+              </span>
+            </label>
+          </div>
+
+          {/* -----------------1--------------- */}
+
+          <div className=" grid grid-rows-2 ">
+            <label
+              htmlFor="email"
+              className="relative block rounded-md border  shadow shadow-md border-gray-200 shadow-sm focus-within:border-purple-600 focus-within:ring-1 focus-within:ring-purple-600"
+            >
               <input
-                type="email"
-                required
-                placeholder="Enter Your Email"
+                type="text"
+                id="email"
+                className="px-3 py-1.5 peer border-none bg-transparent text-gray-800 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
+                placeholder="email"
                 onChange={(e) => setEmail(e.target.value)}
               />
-            </div>
-            <div className=" grid grid-rows-2 gap-y-2">
-              <label className="text-blue-600 text-xl">fatherName</label>
+
+              <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white  p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                Email
+              </span>
+            </label>
+          </div>
+
+          {/* -----------------2--------------- */}
+
+          <div className=" grid grid-rows-2 ">
+            <label
+              htmlFor="fatherName"
+              className="relative block rounded-md border  shadow shadow-md border-gray-200 shadow-sm focus-within:border-purple-600 focus-within:ring-1 focus-within:ring-purple-600"
+            >
               <input
                 type="text"
-                placeholder="Enter Your fatherName"
+                id="fatherName"
+                className="px-3 py-1.5 peer border-none bg-transparent text-gray-800 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
+                placeholder="fatherName"
                 onChange={(e) => setFName(e.target.value)}
               />
-            </div>
-            <div className=" grid grid-rows-2 gap-y-2">
-              <label className="text-blue-600 text-xl">MotherName</label>
+
+              <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white  p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                FatherName
+              </span>
+            </label>
+          </div>
+
+          {/* -----------------3--------------- */}
+
+          <div className=" grid grid-rows-2 ">
+            <label
+              htmlFor="motherName"
+              className="relative block rounded-md border  shadow shadow-md border-gray-200 shadow-sm focus-within:border-purple-600 focus-within:ring-1 focus-within:ring-purple-600"
+            >
               <input
                 type="text"
-                placeholder="Enter Your MotherName"
+                id="motherName"
+                className="px-3 py-1.5 peer border-none bg-transparent text-gray-800 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
+                placeholder="MotherName"
                 onChange={(e) => setMName(e.target.value)}
               />
-            </div>
-            <div className=" grid grid-rows-2 gap-y-2">
-              <label className="text-blue-600 text-xl">MobileNumber</label>
+
+              <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white  p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                MotherName
+              </span>
+            </label>
+          </div>
+
+          {/* -----------------4--------------- */}
+
+          <div className=" grid grid-rows-2 ">
+            <label
+              htmlFor="mobileNumber"
+              className="relative block rounded-md border  shadow shadow-md border-gray-200 shadow-sm focus-within:border-purple-600 focus-within:ring-1 focus-within:ring-purple-600"
+            >
               <input
                 type="number"
-                required
-                placeholder="Enter Your MobileNumber"
+                id="mobileNumber"
+                className="px-3 py-1.5 peer border-none bg-transparent text-gray-800 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
+                placeholder="Name"
                 onChange={(e) => setNumber(e.target.value)}
               />
-            </div>
-            <div className=" grid grid-rows-2 gap-y-2">
-              <label className="text-blue-600 text-xl">Aadhar</label>
+
+              <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white  p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                MobileNumber
+              </span>
+            </label>
+          </div>
+
+          {/* -----------------5--------------- */}
+
+          <div className=" grid grid-rows-2 ">
+            <label
+              htmlFor="aadhar"
+              className="relative block rounded-md border  shadow shadow-md border-gray-200 shadow-sm focus-within:border-purple-600 focus-within:ring-1 focus-within:ring-purple-600"
+            >
               <input
                 type="text"
-                required
-                placeholder="Enter Your AadharNumber"
+                id="aadhar"
+                className="px-3 py-1.5 peer border-none bg-transparent text-gray-800 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
+                placeholder="Aadhar"
                 onChange={(e) => setAadhar(e.target.value)}
               />
-            </div>
-            <div className=" grid grid-rows-2 gap-y-2">
-              <label className="text-blue-600 text-xl">Address</label>
+
+              <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white  p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                Aadhar
+              </span>
+            </label>
+          </div>
+
+          {/* -----------------6--------------- */}
+
+          <div className=" grid grid-rows-2 ">
+            <label
+              htmlFor="gender"
+              className="relative block rounded-md border  shadow shadow-md border-gray-200 shadow-sm focus-within:border-purple-600 focus-within:ring-1 focus-within:ring-purple-600"
+            >
               <input
                 type="text"
-                placeholder="Enter Your Address"
-                onChange={(e) => setAddress(e.target.value)}
-              />
-            </div>
-            <div className=" grid grid-rows-2 gap-y-2">
-              <label className="text-blue-600 text-xl">Gender</label>
-              <input
-                type="text"
-                required
-                placeholder="Enter Your Gender"
+                id="gender"
+                className="px-3 py-1.5 peer border-none bg-transparent text-gray-800 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
+                placeholder="Gender"
                 onChange={(e) => setGender(e.target.value)}
               />
-            </div>
-            <div className=" grid grid-rows-2 gap-y-2">
-              <label className="text-blue-600 text-xl">DOB</label>
-              <input
-                type="date"
-                required
-                placeholder="Enter Your DOB"
-                onChange={(e) => setDOB(e.target.value)}
-              />
-            </div>
-            <div className=" grid grid-rows-2 gap-y-2">
-              <label className="text-blue-600 text-xl">Category</label>
+
+              <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white  p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                Gender
+              </span>
+            </label>
+          </div>
+
+          {/* -----------------7--------------- */}
+
+          <div className=" grid grid-rows-2 ">
+            <label
+              htmlFor="address"
+              className="relative block rounded-md border  shadow shadow-md border-gray-200 shadow-sm focus-within:border-purple-600 focus-within:ring-1 focus-within:ring-purple-600"
+            >
               <input
                 type="text"
-                placeholder="Enter Your Category"
+                id="address"
+                className="px-3 py-1.5 peer border-none bg-transparent text-gray-800 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
+                placeholder="Address"
+                onChange={(e) => setAddress(e.target.value)}
+              />
+
+              <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white  p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                Address
+              </span>
+            </label>
+          </div>
+
+          {/* -----------------8--------------- */}
+
+          <div className=" grid grid-rows-2 ">
+            <label
+              htmlFor="dob"
+              className="relative block rounded-md border  shadow shadow-md border-gray-200 shadow-sm focus-within:border-purple-600 focus-within:ring-1 focus-within:ring-purple-600"
+            >
+              <input
+                type="text"
+                id="dob"
+                className="px-3 py-1.5 peer border-none bg-transparent text-gray-800 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
+                placeholder="DateOfBirth"
+                onChange={(e) => setDOB(e.target.value)}
+              />
+
+              <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white  p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                DateOfBirth
+              </span>
+            </label>
+          </div>
+
+          {/* ------------------9-------------- */}
+
+          <div className=" grid grid-rows-2 ">
+            <label
+              htmlFor="category"
+              className="relative block rounded-md border  shadow shadow-md border-gray-200 shadow-sm focus-within:border-purple-600 focus-within:ring-1 focus-within:ring-purple-600"
+            >
+              <input
+                type="text"
+                id="category"
+                className="px-3 py-1.5 peer border-none bg-transparent text-gray-800 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
+                placeholder="Category"
                 onChange={(e) => setCatogory(e.target.value)}
               />
-            </div>
+
+              <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white  p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                Category
+              </span>
+            </label>
           </div>
-          <div className="flex justify-center items-center border-2 bg-blue-600">
-            <button type="submit"> submit</button>
-          </div>
+
+          {/* ------------------10-------------- */}
         </div>
-      </form>
-    </div>
+        <div className="flex justify-center items-center">
+          <button className="bg-blue-600 px-10 rounded-md py-2" type="submit">
+            submit
+          </button>
+        </div>
+      </div>
+    </form>
   );
 };
 

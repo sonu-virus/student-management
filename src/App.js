@@ -1,15 +1,17 @@
-import { Route, Routes } from "react-router-dom";
-import SignUpPage from "./pages/auth/SignUp";
-import HomePage from "./pages/HomePage";
-import ResetPassword from "./pages/auth/ResetPassword";
-import Login from "./pages/auth/LogIn";
-import ForgotPasswordPage from "./pages/auth/ForgotPassword";
-import StudentsListPage from "./pages/Students/GetAllStudents";
-import { createContext, useEffect, useState } from "react";
-import { getCookie, setCookie } from "./pages/utils/manageCookie";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import AddStudent from "./pages/Students/AddStudent";
+import { Route, Routes } from 'react-router-dom';
+import SignUpPage from './pages/auth/SignUp';
+import HomePage from './pages/HomePage';
+import ResetPassword from './pages/auth/ResetPassword';
+import Login from './pages/auth/LogIn';
+import ForgotPasswordPage from './pages/auth/ForgotPassword';
+import StudentsListPage from './pages/Students/GetAllStudents';
+import { createContext, useEffect, useState } from 'react';
+import { getCookie, setCookie } from './pages/utils/manageCookie';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import AddStudent from './pages/Students/AddStudent';
+import Batch from './pages/Batch/CreateBatch';
+import StAdmission from './pages/Students/StAdmission';
 
 export const AuthContext = createContext();
 
@@ -21,14 +23,14 @@ const App = () => {
       const res = await fetch(
         `https://api.iot.inflection.org.in/users/renew_token`,
         {
-          method: "GET",
+          method: 'GET',
           headers: {
             Authorization: `Bearer ${refreshToken}`,
           },
         }
       );
       const data = await res.json();
-      setCookie("accessToken", data.access_token);
+      setCookie('accessToken', data.access_token);
     } catch (err) {
       console.log(err);
     }
@@ -36,8 +38,8 @@ const App = () => {
 
   useEffect(() => {
     const tokenChecker = () => {
-      const accessToken = getCookie("accessToken");
-      const refreshToken = getCookie("refreshToken");
+      const accessToken = getCookie('accessToken');
+      const refreshToken = getCookie('refreshToken');
 
       if (accessToken || accessToken !== null) {
         return;
@@ -60,7 +62,10 @@ const App = () => {
         <Route path="/auth/forgot_password" element={<ForgotPasswordPage />} />
         <Route path="/auth/login" element={<Login />} />
         <Route path="/students" element={<StudentsListPage />} />
-        <Route path="/student" element={<AddStudent />} />
+        <Route path="/students/create" element={<AddStudent />} />
+        <Route path="/students/admission/:id" element={<StAdmission />} />
+
+        <Route path="/sms/batches" element={<Batch />} />
         <Route path="*" element={<div>Page Not Found</div>} />
       </Routes>
     </AuthContext.Provider>
