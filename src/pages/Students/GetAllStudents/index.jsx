@@ -1,30 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { getCookie } from '../../utils/manageCookie';
-import { Link } from 'react-router-dom';
+import { getCookie } from '../../../utils/manageCookie';
 
 const StudentsListPage = () => {
   const [allStuData, setAllStuData] = useState([]);
   const accessToken = getCookie('accessToken');
+  const [show, setShow] = useState(false);
+
+  const fetchAllStudents = async () => {
+    try {
+      const res = await fetch(
+        'https://api.iot.inflection.org.in/sms/students  ',
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      const data = await res.json();
+      console.log(data);
+      setAllStuData(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handlePopup = () => {
+    setShow(!show);
+  };
 
   useEffect(() => {
-    const fetchAllStudents = async () => {
-      try {
-        const res = await fetch(
-          'https://api.iot.inflection.org.in/sms/students  ',
-          {
-            method: 'GET',
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        const data = await res.json();
-        console.log(data);
-        setAllStuData(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
     fetchAllStudents();
   }, []);
 
@@ -54,7 +59,17 @@ const StudentsListPage = () => {
               <p>MotherName : {data.mother_name}</p>
               <p>Category : {data.category.student_categories}</p>
             </div>
-            <Link to={`/students/admission/${data.id}`}>Addmission</Link>
+            <button onClick={handlePopup}>Admission </button>
+            {show && (
+              <div className="fixed inset-0 bg-black/10 flex justify-center items-center">
+                <div className="w-96 h-96 bg-white">
+                  <button onClick={handlePopup}>close</button>
+                  <div>
+                    <div>hello</div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         ))}
       </div>

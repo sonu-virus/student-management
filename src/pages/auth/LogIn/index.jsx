@@ -1,15 +1,22 @@
-import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../App';
-import manageCookie, { setCookie } from '../../utils/manageCookie';
+import manageCookie, { setCookie } from '../../../utils/manageCookie';
 
-import { seeToast } from '../../utils/toast';
+import { seeToast } from '../../../utils/toast';
 
 const Login = () => {
+  const navigate = useNavigate();
   const { isLogin, setIsLogin } = useContext(AuthContext);
   const [email, setEmail] = useState('');
 
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    if (isLogin) {
+      navigate('/students', { replace: true });
+    }
+  }, []);
 
   const login = async (event) => {
     event.preventDefault();
@@ -25,11 +32,10 @@ const Login = () => {
         },
       });
       const data = await res.json();
-      console.log(data);
       setCookie('accessToken', data.access_token);
       setCookie('refreshToken', data.refresh_token);
-      console.log(data);
-      seeToast('Login successful !');
+      setIsLogin(true);
+      navigate('/students', { replace: true });
     } catch (error) {
       console.log(error);
     }

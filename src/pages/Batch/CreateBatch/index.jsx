@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getCookie } from '../../utils/manageCookie';
+import { getCookie } from '../../../utils/manageCookie';
 
 const Batch = () => {
   const accessToken = getCookie('accessToken');

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import {  useNavigate, useParams } from 'react-router-dom';
-import { seeToast } from '../../utils/toast';
+import { useNavigate, useParams } from 'react-router-dom';
+import { seeToast } from '../../../utils/toast';
 
 function ResetPassword() {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ function ResetPassword() {
       );
       const data = await res.json();
       console.log(data);
-      navigate('/auth/login',{replace:true});
+      navigate('/auth/login', { replace: true });
     } catch (error) {
       console.log(error);
     }

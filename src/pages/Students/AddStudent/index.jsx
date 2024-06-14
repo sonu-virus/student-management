@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { getCookie } from '../../utils/manageCookie';
+import { getCookie } from '../../../utils/manageCookie';
+import { Link } from 'react-router-dom';
 const AddStudent = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -282,10 +283,13 @@ const AddStudent = () => {
 
           {/* ------------------10-------------- */}
         </div>
-        <div className="flex justify-center items-center">
-          <button className="bg-blue-600 px-10 rounded-md py-2" type="submit">
-            submit
+        <div className="flex justify-center space-x-60 items-center">
+          <button className="bg-blue-600 px-4 rounded-md py-2" type="submit">
+            CreateStudent
           </button>
+          <Link className="bg-blue-600 px-4 rounded-md py-2" to={'/students'}>
+            StudentsListPage
+          </Link>
         </div>
       </div>
     </form>

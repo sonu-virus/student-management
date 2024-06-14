@@ -6,17 +6,26 @@ import Login from './pages/auth/LogIn';
 import ForgotPasswordPage from './pages/auth/ForgotPassword';
 import StudentsListPage from './pages/Students/GetAllStudents';
 import { createContext, useEffect, useState } from 'react';
-import { getCookie, setCookie } from './pages/utils/manageCookie';
+import { getCookie, setCookie } from './utils/manageCookie';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddStudent from './pages/Students/AddStudent';
 import Batch from './pages/Batch/CreateBatch';
 import StAdmission from './pages/Students/StAdmission';
+import ProtectedRoute from './utils/ProtectedRoute';
 
 export const AuthContext = createContext();
 
 const App = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(() => {
+    const access_token = getCookie('accessToken');
+
+    if (access_token || access_token !== null) {
+      return true;
+    } else {
+      return false;
+    }
+  });
 
   const renewToken = async (refreshToken) => {
     try {
@@ -46,26 +55,37 @@ const App = () => {
       }
       if (refreshToken && refreshToken !== null) {
         renewToken(refreshToken);
+        return;
+      } else {
+        if (isLogin) {
+          window.location.reload();
+        }
       }
     };
     const tokenInterval = setInterval(tokenChecker, 1000);
+
     return () => clearInterval(tokenInterval);
-  }, []);
+  }, [isLogin]);
 
   return (
     <AuthContext.Provider value={{ isLogin, setIsLogin }}>
       <ToastContainer />
       <Routes>
-        <Route path="/" element={<HomePage />} />
         <Route path="/auth/sign_up" element={<SignUpPage />} />
         <Route path="/auth/reset_password/:token" element={<ResetPassword />} />
         <Route path="/auth/forgot_password" element={<ForgotPasswordPage />} />
         <Route path="/auth/login" element={<Login />} />
-        <Route path="/students" element={<StudentsListPage />} />
-        <Route path="/students/create" element={<AddStudent />} />
-        <Route path="/students/admission/:id" element={<StAdmission />} />
+
+        {/* ----- Protected Routes ------- */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/students" element={<StudentsListPage />} />
+          <Route path="/students/create" element={<AddStudent />} />
+          <Route path="/students/admission/:id" element={<StAdmission />} />
+        </Route>
 
         <Route path="/sms/batches" element={<Batch />} />
+        {/* --------- Not Found Page -------- */}
         <Route path="*" element={<div>Page Not Found</div>} />
       </Routes>
     </AuthContext.Provider>
