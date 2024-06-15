@@ -1,10 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { getCookie } from '../../../utils/manageCookie';
+import { Link } from 'react-router-dom';
+import { seeToast } from '../../../utils/toast';
 
 const StudentsListPage = () => {
   const [allStuData, setAllStuData] = useState([]);
+  const [batcheDetails, setBatchDetails] = useState([]);
   const accessToken = getCookie('accessToken');
   const [show, setShow] = useState(false);
+
+  const [admissionDetails, setAddmissionDetails] = useState({
+    student_id: '',
+    batch_id: '',
+  });
+
+  const resetAdmissionDetails = () => {
+    setAddmissionDetails({ student_id: '', batch_id: '' });
+  };
 
   const fetchAllStudents = async () => {
     try {
@@ -18,10 +30,59 @@ const StudentsListPage = () => {
         }
       );
       const data = await res.json();
-      console.log(data);
       setAllStuData(data);
     } catch (err) {
       console.log(err);
+    }
+  };
+  const batcheDetail = async () => {
+    try {
+      const res = await fetch(
+        'https://api.iot.inflection.org.in/sms/batches  ',
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      const batchData = await res.json();
+      console.log(batchData);
+      setBatchDetails(batchData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const admitStudent = async () => {
+    if (admissionDetails.student_id == '' || admissionDetails.batch_id == '') {
+      seeToast('Please Select Student And Batch to Addmission', 'info');
+      return;
+    }
+    try {
+      const res = await fetch(
+        'https://api.iot.inflection.org.in/sms/students/admission',
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+          body: JSON.stringify(admissionDetails),
+        }
+      );
+      const data = await res.json();
+      if (data.error == true) {
+        seeToast(data?.message, 'error');
+      } else {
+        seeToast('Addmission Successfull', 'success');
+      }
+
+      resetAdmissionDetails();
+      handlePopup();
+    } catch (error) {
+      console.log(error);
+      handlePopup();
     }
   };
 
@@ -31,6 +92,7 @@ const StudentsListPage = () => {
 
   useEffect(() => {
     fetchAllStudents();
+    batcheDetail();
   }, []);
 
   return (
@@ -41,6 +103,7 @@ const StudentsListPage = () => {
         {allStuData?.map((data) => (
           <div
             key={data.id}
+            id={data.id}
             className="bg-gradient-to-t from-violet-400 to-gray-400 p-2  rounded-xl"
           >
             <div
@@ -59,13 +122,54 @@ const StudentsListPage = () => {
               <p>MotherName : {data.mother_name}</p>
               <p>Category : {data.category.student_categories}</p>
             </div>
-            <button onClick={handlePopup}>Admission </button>
+
+            <div className="flex justify-between">
+              <button
+                onClick={() => {
+                  setAddmissionDetails((prevStat) => ({
+                    ...prevStat,
+                    student_id: data.id,
+                  }));
+                  handlePopup();
+                }}
+              >
+                Admission{' '}
+              </button>
+              <Link to={'/students/create'}>AddStudent</Link>
+            </div>
             {show && (
               <div className="fixed inset-0 bg-black/10 flex justify-center items-center">
                 <div className="w-96 h-96 bg-white">
-                  <button onClick={handlePopup}>close</button>
+                  <button
+                    onClick={() => {
+                      resetAdmissionDetails();
+                      handlePopup();
+                    }}
+                  >
+                    close
+                  </button>
                   <div>
-                    <div>hello</div>
+                    <h3>Select A Batch To Take Addmission</h3>
+                    <div>
+                      <select
+                        name="batches"
+                        id="batches"
+                        onChange={(e) =>
+                          setAddmissionDetails((prev) => ({
+                            ...prev,
+                            batch_id: e.target.value * 1,
+                          }))
+                        }
+                      >
+                        <option value="">Choose a batch</option>
+                        {batcheDetails?.map((batch) => (
+                          <option value={batch.id} key={batch.id}>
+                            {batch.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <button onClick={admitStudent}>Submit</button>
                   </div>
                 </div>
               </div>
