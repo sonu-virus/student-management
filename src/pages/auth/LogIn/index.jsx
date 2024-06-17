@@ -3,8 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../App';
 import manageCookie, { setCookie } from '../../../utils/manageCookie';
 
-import { seeToast } from '../../../utils/toast';
-
 const Login = () => {
   const navigate = useNavigate();
   const { isLogin, setIsLogin } = useContext(AuthContext);

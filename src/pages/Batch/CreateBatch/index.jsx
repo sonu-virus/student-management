@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { getCookie } from '../../../utils/manageCookie';
+import { Link } from 'react-router-dom';
+import { seeToast } from '../../../utils/toast';
 
 const Batch = () => {
   const accessToken = getCookie('accessToken');
@@ -25,9 +27,10 @@ const Batch = () => {
       });
       console.log('post');
       const data = await res.json();
-      console.log(data);
+      seeToast('Batch Created !');
     } catch (err) {
       console.log(err);
+      seeToast(err.error);
     }
   };
 
@@ -35,7 +38,7 @@ const Batch = () => {
     <>
       <div className="flex items-center justify-center h-screen ">
         <div className="flex  bg-gray-300 w-1/4 rounded-md justify-center h-2/3 items-center ">
-          <form>
+          <form className="pb-8">
             <div className="grid  p-8 gap-8  ">
               <div className=" grid grid-rows-2 gap-y-2">
                 <label className="text-blue-600 text-xl">BatchName</label>
@@ -64,14 +67,17 @@ const Batch = () => {
                 />
               </div>
             </div>
-            <div className="flex justify-center ">
+            <div className="flex   justify-between ">
               <button
                 type="submit"
-                className=" bg-blue-600 h-8 w-32 rounded-lg"
+                className=" bg-blue-600 px-2 py-2 rounded-lg"
                 onClick={StBatch}
               >
                 CreateBatch
               </button>
+              <div className="bg-blue-600 rounded-md px-2 py-2 items-center justify-center ">
+                <Link to={'/students/create'}>AddStudent</Link>
+              </div>
             </div>
           </form>
         </div>

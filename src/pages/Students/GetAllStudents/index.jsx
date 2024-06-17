@@ -97,7 +97,9 @@ const StudentsListPage = () => {
 
   return (
     <div>
-      <div>StudentsListPage</div>
+      <div className="flex p-4 justify-center ">
+        <p className="bg-blue-600 px-12 py-1 text-lg">StudentsListPage</p>
+      </div>
 
       <div className="grid grid-cols-3 gap-4 ">
         {allStuData?.map((data) => (
@@ -138,44 +140,71 @@ const StudentsListPage = () => {
               <Link to={'/students/create'}>AddStudent</Link>
             </div>
             {show && (
-              <div className="fixed inset-0 bg-black/10 flex justify-center items-center">
-                <div className="w-96 h-96 bg-white">
-                  <button
-                    onClick={() => {
-                      resetAdmissionDetails();
-                      handlePopup();
-                    }}
-                  >
-                    close
-                  </button>
+              <div className="fixed inset-0  bg-black/10 flex justify-center items-center">
+                <div className=" absolute  w-1/3 h-96 bg-white  ">
                   <div>
-                    <h3>Select A Batch To Take Addmission</h3>
-                    <div>
-                      <select
-                        name="batches"
-                        id="batches"
-                        onChange={(e) =>
-                          setAddmissionDetails((prev) => ({
-                            ...prev,
-                            batch_id: e.target.value * 1,
-                          }))
-                        }
+                    <button
+                      className="relative left-2 top-2"
+                      onClick={() => {
+                        resetAdmissionDetails();
+                        handlePopup();
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="size-6"
                       >
-                        <option value="">Choose a batch</option>
-                        {batcheDetails?.map((batch) => (
-                          <option value={batch.id} key={batch.id}>
-                            {batch.name}
-                          </option>
-                        ))}
-                      </select>
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6 18 18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                    {/* ---------------------------- */}
+                    <div className="px-8 pt-4 flex flex-col gap-y-8 ">
+                      <h3>Select A Batch To Take Addmission</h3>
+                      <div>
+                        <select
+                          name="batches"
+                          id="batches"
+                          onChange={(e) =>
+                            setAddmissionDetails((prev) => ({
+                              ...prev,
+                              batch_id: e.target.value * 1,
+                            }))
+                          }
+                        >
+                          <option value="">Choose a batch</option>
+                          {batcheDetails?.map((batch) => (
+                            <option value={batch.id} key={batch.id}>
+                              {batch.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <button
+                        className="bg-blue-600 p-2"
+                        onClick={admitStudent}
+                      >
+                        Submit
+                      </button>
                     </div>
-                    <button onClick={admitStudent}>Submit</button>
                   </div>
                 </div>
               </div>
             )}
           </div>
         ))}
+      </div>
+      <div className="flex justify-center p-8">
+        <Link className="bg-blue-600 rounded-md p-2" to={'/create/batches'}>
+          Create Batches
+        </Link>
       </div>
     </div>
   );
