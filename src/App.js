@@ -84,7 +84,7 @@ const App = () => {
           <Route path="/students/admission/:id" element={<StAdmission />} />
         </Route>
 
-        <Route path="/sms/batches" element={<Batch />} />
+        <Route path="/create/batches" element={<Batch />} />
         {/* --------- Not Found Page -------- */}
         <Route path="*" element={<div>Page Not Found</div>} />
       </Routes>
