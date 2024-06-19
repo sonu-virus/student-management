@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../App';
 import manageCookie, { setCookie } from '../../../utils/manageCookie';
+import { seeToast } from '../../../utils/toast';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,6 +31,10 @@ const Login = () => {
         },
       });
       const data = await res.json();
+      if (data.error == true) {
+        seeToast(data.message, 'error');
+        return;
+      }
       setCookie('accessToken', data.access_token);
       setCookie('refreshToken', data.refresh_token);
       setIsLogin(true);

@@ -11,8 +11,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddStudent from './pages/Students/AddStudent';
 import Batch from './pages/Batch/CreateBatch';
-import StAdmission from './pages/Students/StAdmission';
 import ProtectedRoute from './utils/ProtectedRoute';
+import GetAllBatches from './pages/Batch/GetAllBatches';
+import Updatebatch from './pages/Batch/UpdateBatch';
 
 export const AuthContext = createContext();
 
@@ -81,7 +82,8 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/students" element={<StudentsListPage />} />
           <Route path="/students/create" element={<AddStudent />} />
-          <Route path="/students/admission/:id" element={<StAdmission />} />
+          <Route path="/batches" element={<GetAllBatches />} />
+          <Route path="/batches/:id" element={<Updatebatch />} />
         </Route>
 
         <Route path="/create/batches" element={<Batch />} />
