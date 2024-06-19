@@ -27,6 +27,7 @@ const Batch = () => {
       });
       console.log('post');
       const data = await res.json();
+      console.log(data);
       seeToast('Batch Created !');
     } catch (err) {
       console.log(err);
@@ -36,47 +37,49 @@ const Batch = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center h-screen ">
-        <div className="flex  bg-gray-300 w-1/4 rounded-md justify-center h-2/3 items-center ">
-          <form className="pb-8">
-            <div className="grid  p-8 gap-8  ">
-              <div className=" grid grid-rows-2 gap-y-2">
-                <label className="text-blue-600 text-xl">BatchName</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="Enter Your BactName"
-                  onChange={(e) => setBatchName(e.target.value)}
-                />
+      <div className="flex items-center bg-purple-500 justify-center h-screen ">
+        <div className="flex  bg-white w-1/4 rounded-md justify-center  h-2/3 items-center ">
+          <form className="flex w-full  mx-4 flex-col gap-y-2 ">
+            <label className=" text-xl  text-blue-600 font-medium">
+              BatchName
+            </label>
+            <input
+              className="rounded-md "
+              type="text"
+              required
+              placeholder="Enter Your BactName"
+              onChange={(e) => setBatchName(e.target.value)}
+            />
+            <label className=" text-blue-600 text-xl font-medium">Class</label>
+            <input
+              className="rounded-md"
+              type="number"
+              required
+              placeholder="Enter Your BatchClass"
+              onChange={(e) => setBatchClass(e.target.value)}
+            />
+            <label className=" text-blue-600 text-xl font-medium">Note</label>
+            <input
+              className="rounded-md"
+              type="text"
+              placeholder="Enter Your Note"
+              onChange={(e) => setNote(e.target.value)}
+            />
+            <div className="mt-4 text-white ">
+              <div className="flex justify-center  rounded-lg  bg-blue-600">
+                <button
+                  type="submit"
+                  className="  px-2 py-2 "
+                  onClick={StBatch}
+                >
+                  CreateBatch
+                </button>
               </div>
-              <div className=" grid grid-rows-2 gap-y-2">
-                <label className="text-blue-600 text-xl">Class</label>
-                <input
-                  type="number"
-                  required
-                  placeholder="Enter Your BatchClass"
-                  onChange={(e) => setBatchClass(e.target.value)}
-                />
-              </div>
-              <div className=" grid grid-rows-2 gap-y-2">
-                <label className="text-blue-600 text-xl">Note</label>
-                <input
-                  type="text"
-                  placeholder="Enter Your Note"
-                  onChange={(e) => setNote(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="flex   justify-between ">
-              <button
-                type="submit"
-                className=" bg-blue-600 px-2 py-2 rounded-lg"
-                onClick={StBatch}
-              >
-                CreateBatch
-              </button>
-              <div className="bg-blue-600 rounded-md px-2 py-2 items-center justify-center ">
-                <Link to={'/students/create'}>AddStudent</Link>
+
+              <div className="flex mt-4 justify-center  rounded-lg  bg-blue-600">
+                <Link className=" px-2 py-2" to={'/students/create'}>
+                  AddStudent
+                </Link>
               </div>
             </div>
           </form>
