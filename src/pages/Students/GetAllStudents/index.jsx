@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getCookie } from '../../../utils/manageCookie';
 import { Link } from 'react-router-dom';
 import { seeToast } from '../../../utils/toast';
+import AdminLayout from '../../Components/AdminLayout/Layout';
 
 const StudentsListPage = () => {
   const [allStuData, setAllStuData] = useState([]);
@@ -96,9 +97,16 @@ const StudentsListPage = () => {
   }, []);
 
   return (
-    <div>
-      <div className="flex p-4 justify-center ">
+    <AdminLayout>
+      <div className="flex p-4  justify-between ">
         <p className="bg-blue-600 px-12 py-1 text-lg">StudentsListPage</p>
+        <div>
+          <Link className="bg-blue-600 rounded-md p-2" to={'/create/batches'}>
+            Create Batches
+          </Link>
+          <Link className="bg-blue-600 rounded-md p-2">StudentListByBatch</Link>
+          <Link className="bg-blue-600 rounded-md p-2">StudentListById</Link>
+        </div>
       </div>
 
       <div className="grid grid-cols-3 gap-4 ">
@@ -201,12 +209,7 @@ const StudentsListPage = () => {
           </div>
         ))}
       </div>
-      <div className="flex justify-center p-8">
-        <Link className="bg-blue-600 rounded-md p-2" to={'/create/batches'}>
-          Create Batches
-        </Link>
-      </div>
-    </div>
+    </AdminLayout>
   );
 };
 
