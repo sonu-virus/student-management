@@ -56,6 +56,8 @@ const AddStudent = () => {
     }
   };
 
+  // --------------------------------------------------
+
   const handleImage = (e) => {
     setProfilePic(e.target.files[0]);
     setPrevImage(URL.createObjectURL(e.target.files[0]));
