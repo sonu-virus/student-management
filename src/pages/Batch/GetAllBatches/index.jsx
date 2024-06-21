@@ -35,8 +35,14 @@ const GetAllBatches = () => {
 
   return (
     <AdminLayout>
-      <div className="w-full">
-        <p className="pt-4 pl-4 text-3xl text-blue-600">Batches</p>
+      <div>
+        <div className="flex justify-between p-2 w-full">
+          <p className="pt-4 pl-4 text-3xl text-blue-600">Batches</p>
+          <div className="bg-blue-600 w-32 rounded m-1 flex justify-center items-center">
+            <Link to={'/create/batches'}>Create Batches</Link>
+          </div>
+        </div>
+
         <div className="flex flex-col gap-y-4 m-6">
           {batchDetails.map((data) => (
             <li

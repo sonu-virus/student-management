@@ -26,7 +26,10 @@ const Sidebar = () => {
     <div className="sticky top-0 left-0 bottom-0 overflow-y-auto h-screen border-r shadow-sm">
       <ul className="flex flex-col gap-1 mt-16">
         {allLinks.map((link, i) => (
-          <li key={i} className="flex items-center gap-1 p-2 border-t">
+          <li
+            key={i}
+            className="flex  hover:bg-gray-400 items-center gap-1 p-2 border-t"
+          >
             <span>{link.icon}</span>
             <Link to={link.path}>{link.label}</Link>
           </li>

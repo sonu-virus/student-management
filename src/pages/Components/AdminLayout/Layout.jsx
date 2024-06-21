@@ -4,7 +4,7 @@ import Header from './Header';
 
 const AdminLayout = (props) => {
   return (
-    <div className="flex gap-3 w-full">
+    <div className="flex w-full">
       <div className="w-96">
         <Sidebar />
       </div>

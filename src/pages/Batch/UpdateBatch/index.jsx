@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getCookie } from '../../../utils/manageCookie';
 import { seeToast } from '../../../utils/toast';
+import AdminLayout from '../../Components/AdminLayout/Layout';
 
 const Updatebatch = () => {
   const params = useParams();
@@ -32,7 +33,6 @@ const Updatebatch = () => {
         }
       );
       const data = await res.json();
-      console.log(data);
       seeToast(data.message);
     } catch (error) {
       console.log(error);
@@ -40,7 +40,7 @@ const Updatebatch = () => {
   };
 
   return (
-    <div>
+    <AdminLayout>
       <div>
         <form onSubmit={updateBatch} className="min-h-screen ">
           <div>
@@ -127,7 +127,7 @@ const Updatebatch = () => {
           </div>
         </form>
       </div>
-    </div>
+    </AdminLayout>
   );
 };
 

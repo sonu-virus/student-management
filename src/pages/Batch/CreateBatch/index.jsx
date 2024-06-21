@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { getCookie } from '../../../utils/manageCookie';
 import { Link } from 'react-router-dom';
 import { seeToast } from '../../../utils/toast';
+import AdminLayout from '../../Components/AdminLayout/Layout';
 
 const Batch = () => {
   const accessToken = getCookie('accessToken');
@@ -27,7 +28,7 @@ const Batch = () => {
       });
       console.log('post');
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       seeToast('Batch Created !');
     } catch (err) {
       console.log(err);
@@ -36,9 +37,9 @@ const Batch = () => {
   };
 
   return (
-    <>
-      <div className="flex items-center bg-purple-500 justify-center h-screen ">
-        <div className="flex  bg-white w-1/4 rounded-md justify-center  h-2/3 items-center ">
+    <AdminLayout>
+      <div className="flex items-center  justify-center h-screen ">
+        <div className="flex  bg-white w-full mx-16 shadow-md shadow-gray-600 rounded-md justify-center  h-96 items-center ">
           <form className="flex w-full  mx-4 flex-col gap-y-2 ">
             <label className=" text-xl  text-blue-600 font-medium">
               BatchName
@@ -72,7 +73,7 @@ const Batch = () => {
                   className="  px-2 py-2 "
                   onClick={StBatch}
                 >
-                  CreateBatch
+                  Submit
                 </button>
               </div>
 
@@ -85,7 +86,7 @@ const Batch = () => {
           </form>
         </div>
       </div>
-    </>
+    </AdminLayout>
   );
 };
 
