@@ -38,8 +38,13 @@ const GetAllBatches = () => {
       <div>
         <div className="flex justify-between p-2 w-full">
           <p className="pt-4 pl-4 text-3xl text-blue-600">Batches</p>
-          <div className="bg-blue-600 w-32 rounded m-1 flex justify-center items-center">
-            <Link to={'/create/batches'}>Create Batches</Link>
+          <div className=" flex justify-center items-center">
+            <Link
+              className="bg-blue-600 h-10 p-2 flex justify-center rounded-md items-center "
+              to={'/create/batches'}
+            >
+              Create Batches
+            </Link>
           </div>
         </div>
 

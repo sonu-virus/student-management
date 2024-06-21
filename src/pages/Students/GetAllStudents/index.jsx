@@ -7,18 +7,21 @@ import StudentCard from '../../Components/AdminLayout/Card';
 
 const StudentsListPage = () => {
   const [allStuData, setAllStuData] = useState([]);
-  const [batcheDetails, setBatchDetails] = useState([]);
+  const [allBatches, setAllBatches] = useState([]);
   const accessToken = getCookie('accessToken');
   const [show, setShow] = useState(false);
-
   const [admissionDetails, setAddmissionDetails] = useState({
     student_id: '',
     batch_id: '',
   });
 
+  // -----------reset admission details-------------
+
   const resetAdmissionDetails = () => {
     setAddmissionDetails({ student_id: '', batch_id: '' });
   };
+
+  //  -----------fetch all student data-------------
 
   const fetchAllStudents = async () => {
     try {
@@ -33,29 +36,15 @@ const StudentsListPage = () => {
       );
       const data = await res.json();
       setAllStuData(data);
-      fetchStuByBatch(data[0].id);
       console.log(data);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const fetchStuByBatch = async (id) => {
-    try {
-      const res = await fetch(
-        `https://api.iot.inflection.org.in/sms/students/batch/${id}`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //-------------------fetch batch details-----------
 
+  //--------batch details-----------------------
   const batcheDetail = async () => {
     try {
       const res = await fetch(
@@ -69,12 +58,12 @@ const StudentsListPage = () => {
       );
       const batchData = await res.json();
       console.log(batchData);
-      setBatchDetails(batchData);
+      setAllBatches(batchData);
     } catch (error) {
       console.log(error);
     }
   };
-
+  //-----------------student admission---------------------
   const admitStudent = async () => {
     if (admissionDetails.student_id == '' || admissionDetails.batch_id == '') {
       seeToast('Please Select Student And Batch to Addmission', 'info');
@@ -106,9 +95,31 @@ const StudentsListPage = () => {
       handlePopup();
     }
   };
-
+  //------------handle popup----------------------
   const handlePopup = () => {
     setShow(!show);
+  };
+
+  const getStudentByBatch = async (stId) => {
+    try {
+      const res = await fetch(
+        `https://api.iot.inflection.org.in/sms/students/batch/${stId}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        }
+      );
+
+      const data = await res.json();
+      console.log('stdByBatch', data);
+      setAllStuData(data);
+    } catch (err) {
+      console.log(err);
+      alert('err from get student by batch');
+    }
   };
 
   useEffect(() => {
@@ -124,12 +135,27 @@ const StudentsListPage = () => {
           <Link className="bg-blue-600 rounded-md p-2" to={'/students/create'}>
             AddStudent
           </Link>
+          <div className="flex flex-col gap-y-8 ">
+            <div>
+              <select
+                name="batches"
+                id="batches"
+                onChange={(e) => getStudentByBatch(e.target.value)}
+              >
+                {allBatches?.map((batch) => (
+                  <option value={batch.id} key={batch.id}>
+                    {batch.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
       </div>
       {allStuData.length > 0 ? (
         <div className="grid grid-cols-2 gap-4 ">
-          {allStuData?.map((data) => (
-            <div key={data.id}>
+          {allStuData?.map((data, i) => (
+            <div key={i}>
               <StudentCard
                 data={data}
                 clickMe={() => {
@@ -181,7 +207,7 @@ const StudentsListPage = () => {
                             }
                           >
                             <option value="">Choose a batch</option>
-                            {batcheDetails?.map((batch) => (
+                            {allBatches?.map((batch) => (
                               <option value={batch.id} key={batch.id}>
                                 {batch.name}
                               </option>
