@@ -57,7 +57,6 @@ const StudentsListPage = () => {
         }
       );
       const batchData = await res.json();
-      console.log(batchData);
       setAllBatches(batchData);
     } catch (error) {
       console.log(error);
@@ -114,8 +113,15 @@ const StudentsListPage = () => {
       );
 
       const data = await res.json();
+
       console.log('stdByBatch', data);
-      setAllStuData(data);
+      for (let i = 0; i < data.length; i++) {
+        let temp = data[i].name;
+        data[i].name = data[i].name_2;
+        data[i].name_2 = temp;
+
+        setAllStuData(data);
+      }
     } catch (err) {
       console.log(err);
       alert('err from get student by batch');

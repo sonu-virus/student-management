@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { getCookie } from '../../../utils/manageCookie';
 import { Link } from 'react-router-dom';
 import AdminLayout from '../../Components/AdminLayout/Layout';
+import Button from '../../Components/AdminLayout/Ui/Button';
 const AddStudent = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -48,8 +49,8 @@ const AddStudent = () => {
           },
         }
       );
-      console.log(res);
       const data = await res.json();
+      console.log(data);
     } catch (err) {
       console.log(err);
     }
@@ -66,11 +67,17 @@ const AddStudent = () => {
     <AdminLayout>
       <form onSubmit={addStudents} className="min-h-screen ">
         <div>
+          {prevImage !== null}
           <div>
             {prevImage !== null && (
-              <img src={prevImage} width={100} height={200} />
+              <img src={prevImage} width={150} height={200} />
             )}
-            <input type="file" accept="image/**" onChange={handleImage} />
+            <input
+              type="file"
+              accept="image/**"
+              className="hidden"
+              onChange={handleImage}
+            />
           </div>
           <div className="grid grid-cols-2 pt-8  p-4 gap-8  ">
             {/* -----------------0--------------- */}
@@ -286,12 +293,10 @@ const AddStudent = () => {
             {/* ------------------10-------------- */}
           </div>
           <div className="flex justify-center space-x-60 items-center">
-            <button className="bg-blue-600 px-4 rounded-md py-2" type="submit">
-              CreateStudent
-            </button>
-            <Link className="bg-blue-600 px-4 rounded-md py-2" to={'/students'}>
-              StudentsListPage
-            </Link>
+            <Button type="submit">Submit</Button>
+            <Button>
+              <Link to={'/students'}>StudentsListPage</Link>
+            </Button>
           </div>
         </div>
       </form>
