@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getCookie } from '../../../utils/manageCookie';
 import { useParams, Link } from 'react-router-dom';
 import AdminLayout from '../../Components/AdminLayout/Layout';
+import Button from '../../Components/AdminLayout/Ui/Button';
 
 const GetAllBatches = () => {
   const params = useParams();
@@ -39,12 +40,9 @@ const GetAllBatches = () => {
         <div className="flex justify-between p-2 w-full">
           <p className="pt-4 pl-4 text-3xl text-blue-600">Batches</p>
           <div className=" flex justify-center items-center">
-            <Link
-              className="bg-blue-600 h-10 p-2 flex justify-center rounded-md items-center "
-              to={'/create/batches'}
-            >
-              Create Batches
-            </Link>
+            <Button>
+              <Link to={'/create/batches'}>Create Batches</Link>
+            </Button>
           </div>
         </div>
 
@@ -52,12 +50,14 @@ const GetAllBatches = () => {
           {batchDetails.map((data) => (
             <li
               key={data.id}
-              className="flex font-serif text-lg hover:text-blue-600 border-2 p-2 border-black  justify-between"
+              className="flex font-serif text-lg border-2 p-2 border-black items-center justify-between"
             >
               <p> BatchName : {data.name} </p>
               <p> Class : {data.class} </p>
               <p> Note : {data.note} </p>
-              <Link to={`/batches/${data.id}`}>EditBtatch</Link>
+              <Button>
+                <Link to={`/batches/${data.id}`}>EditBtatch</Link>
+              </Button>
             </li>
           ))}
         </div>

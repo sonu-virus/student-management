@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { seeToast } from '../../../utils/toast';
 import AdminLayout from '../../Components/AdminLayout/Layout';
 import StudentCard from '../../Components/AdminLayout/Card';
+import Button from '../../Components/AdminLayout/Ui/Button';
 
 const StudentsListPage = () => {
   const [allStuData, setAllStuData] = useState([]);
@@ -36,7 +37,7 @@ const StudentsListPage = () => {
       );
       const data = await res.json();
       setAllStuData(data);
-      console.log(data);
+      // console.log(data);
     } catch (err) {
       console.log(err);
     }
@@ -81,6 +82,7 @@ const StudentsListPage = () => {
         }
       );
       const data = await res.json();
+      console.log('addmision', data);
       if (data.error == true) {
         seeToast(data?.message, 'error');
       } else {
@@ -114,7 +116,7 @@ const StudentsListPage = () => {
 
       const data = await res.json();
 
-      console.log('stdByBatch', data);
+      // console.log('stdByBatch', data);
       for (let i = 0; i < data.length; i++) {
         let temp = data[i].name;
         data[i].name = data[i].name_2;
@@ -138,9 +140,9 @@ const StudentsListPage = () => {
       <div className="flex p-4   justify-between ">
         <p className=" px-2 py-1 text-xl">StudentsList</p>
         <div className="flex gap-x-2">
-          <Link className="bg-blue-600 rounded-md p-2" to={'/students/create'}>
-            AddStudent
-          </Link>
+          <Button>
+            <Link to={'/students/create'}>AddStudent</Link>
+          </Button>
           <div className="flex flex-col gap-y-8 ">
             <div>
               <select
@@ -220,12 +222,7 @@ const StudentsListPage = () => {
                             ))}
                           </select>
                         </div>
-                        <button
-                          className="bg-blue-600 p-2"
-                          onClick={admitStudent}
-                        >
-                          Submit
-                        </button>
+                        <Button onClick={admitStudent}>Submit</Button>
                       </div>
                     </div>
                   </div>

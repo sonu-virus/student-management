@@ -72,12 +72,7 @@ const AddStudent = () => {
             {prevImage !== null && (
               <img src={prevImage} width={150} height={200} />
             )}
-            <input
-              type="file"
-              accept="image/**"
-              className="hidden"
-              onChange={handleImage}
-            />
+            <input type="file" accept="image/**" onChange={handleImage} />
           </div>
           <div className="grid grid-cols-2 pt-8  p-4 gap-8  ">
             {/* -----------------0--------------- */}

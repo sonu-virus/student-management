@@ -14,6 +14,7 @@ import Batch from './pages/Batch/CreateBatch';
 import ProtectedRoute from './utils/ProtectedRoute';
 import GetAllBatches from './pages/Batch/GetAllBatches';
 import Updatebatch from './pages/Batch/UpdateBatch';
+import AddDevice from './pages/Device/AddDevice';
 
 export const AuthContext = createContext();
 
@@ -84,6 +85,7 @@ const App = () => {
           <Route path="/students/create" element={<AddStudent />} />
           <Route path="/batches" element={<GetAllBatches />} />
           <Route path="/batches/:id" element={<Updatebatch />} />
+          <Route path="/device" element={<AddDevice />} />
         </Route>
 
         <Route path="/create/batches" element={<Batch />} />
